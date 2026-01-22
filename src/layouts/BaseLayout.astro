@@ -1,0 +1,37 @@
+---
+import Header from "../components/layout/Header.astro";
+import { ViewTransitions } from "astro:transitions";
+import "../styles/global.css";
+
+const {
+  title,
+  description = "Portfólio de Nara Oliveira, Designer e Ilustradora.",
+} = Astro.props;
+---
+
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <ViewTransitions />
+  </head>
+  <body
+    class="bg-paper text-ink font-sans antialiased selection:bg-accent selection:text-white"
+  >
+    <Header />
+
+    <slot />
+
+    <footer
+      class="py-10 text-center text-xs opacity-40 uppercase tracking-widest"
+    >
+      © {new Date().getFullYear()} Nara Oliveira
+    </footer>
+  </body>
+</html>

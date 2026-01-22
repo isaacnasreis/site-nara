@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Marquee from "../components/ui/Marquee.jsx";
+
+// Título da página para SEO
+const pageTitle = "Nara Oliveira | Designer e Ilustradora";
+---
+
+<BaseLayout title={pageTitle}>
+  <main class="bg-paper min-h-screen">
+    <section class="container mx-auto px-4 pt-20 pb-10">
+      <h1 class="text-xl font-sans text-ink tracking-widest uppercase mb-2">
+        Nara Oliveira
+      </h1>
+      <p class="text-ink/60 max-w-md text-sm">Designer visual e ilustrações.</p>
+    </section>
+
+    <Marquee client:load />
+
+    <section class="container mx-auto px-4 py-20">
+      <h2 class="sr-only">Projetos Selecionados</h2>
+      <div
+        class="h-64 border-2 border-dashed border-ink/20 flex items-center justify-center text-ink/40"
+      >
+        [Área da Grid de Projetos]
+      </div>
+    </section>
+  </main>
+</BaseLayout>

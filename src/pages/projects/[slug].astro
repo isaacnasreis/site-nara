@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+
+// gera as rotas estáticas para cada arquivo .md na pasta content/projects
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render(); // Renderiza o texto do Markdown
+---
+
+<BaseLayout title={`${project.data.title} | Nara Oliveira`}>
+  <article class="container mx-auto px-4 py-10 max-w-5xl">
+    <header class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+      <div>
+        <span
+          class="text-accent text-xs font-bold uppercase tracking-widest mb-2 block"
+        >
+          {project.data.category} — {project.data.year}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-display text-ink mb-6">
+          {project.data.title}
+        </h1>
+        <p class="text-lg text-ink/70 leading-relaxed max-w-md">
+          {project.data.description}
+        </p>
+      </div>
+
+      <div class="md:text-right text-sm text-ink/50 space-y-1">
+        <p>Cliente: Editora X</p>
+        <p>Serviços: Direção de Arte, Ilustração</p>
+      </div>
+    </header>
+
+    <div class="mb-16 rounded-sm overflow-hidden shadow-sm">
+      <Image
+        src={project.data.cover}
+        alt={`Capa do projeto ${project.data.title}`}
+        class="w-full h-auto object-cover"
+        transition:name={`img-${project.slug}`}
+      />
+    </div>
+
+    <div class="prose prose-stone mx-auto mb-20">
+      <Content />
+    </div>
+
+    {
+      project.data.gallery && (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {project.data.gallery.map((img) => (
+            <Image
+              src={img}
+              alt="Detalhe do projeto"
+              class="w-full h-auto rounded-sm hover:opacity-95 transition-opacity"
+            />
+          ))}
+        </div>
+      )
+    }
+
+    <div class="mt-20 pt-10 border-t border-ink/10 text-center">
+      <a
+        href="/"
+        class="text-ink hover:text-accent transition-colors font-medium"
+      >
+        ← Voltar para Projetos
+      </a>
+    </div>
+  </article>
+</BaseLayout>
