@@ -2,35 +2,48 @@ import { motion } from "framer-motion";
 
 const Marquee = () => {
   const items = [
-    "DESIGN GRÁFICO",
+    "ilustradora",
     "✶",
-    "ILUSTRAÇÃO",
+    "designer editorial",
     "✶",
-    "IDENTIDADE VISUAL",
+    "dou cor, forma e vida a livros infantojuvenis",
+    "✶",
+    "pensando no tempo que tenho para pensar sobre o tempo que falta",
     "✶",
   ];
 
-  const marqueeContent = [...items, ...items, ...items, ...items];
-
   return (
-    <div className="relative w-full overflow-hidden bg-paper border-y border-ink/10 py-4">
+    <div className="relative w-full overflow-hidden bg-paper py-4">
       <motion.div
-        className="flex whitespace-nowrap"
-        animate={{ x: [0, -1000] }} // Ajuste o -1000 dependendo da largura do conteúdo real
+        className="flex whitespace-nowrap w-max"
+        animate={{ x: ["0%", "-50%"] }}
         transition={{
           repeat: Infinity,
           ease: "linear",
-          duration: 20, // Quanto maior, mais lento
+          duration: 65,
         }}
       >
-        {marqueeContent.map((item, index) => (
-          <span
-            key={index}
-            className="text-4xl md:text-6xl font-display font-medium text-ink px-4 uppercase tracking-tighter"
-          >
-            {item}
-          </span>
-        ))}
+        <div className="flex shrink-0 items-center">
+          {items.map((item, index) => (
+            <span
+              key={`block-1-${index}`}
+              className="text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex shrink-0 items-center" aria-hidden="true">
+          {items.map((item, index) => (
+            <span
+              key={`block-2-${index}`}
+              className="text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
       </motion.div>
     </div>
   );

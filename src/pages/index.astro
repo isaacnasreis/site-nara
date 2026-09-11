@@ -1,20 +1,24 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import bolha1 from "../assets/ilustracoes/bolhas/1.png";
+import bolha2 from "../assets/ilustracoes/bolhas/2.png";
+import FloatingBubbles from "../components/ui/FloatingBubbles";
 import Marquee from "../components/ui/Marquee.jsx";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Título da página para SEO
 const pageTitle = "Nara Oliveira | Designer e Ilustradora";
 ---
 
 <BaseLayout title={pageTitle}>
   <main class="bg-paper min-h-screen">
-    <section class="container mx-auto px-4 pt-20 pb-10">
-      <h1 class="text-xl font-sans text-ink tracking-widest uppercase mb-2">
-        Nara Oliveira
-      </h1>
-      <p class="text-ink/60 max-w-md text-sm">Designer visual e ilustrações.</p>
-    </section>
-
+    <div class="relative w-full flex items-center justify-center bg-paper overflow-hidden">
+      <FloatingBubbles client:load bubbles={[bolha1.src, bolha2.src]} />
+      <img
+        src="src/assets/ilustracoes/1.png"
+        alt="Imagem de destaque"
+        class="w-full max-w-7xl h-9/12 object-cover relative z-10 pointer-events-none"
+      />
+    </div>
+    
     <Marquee client:load />
 
     <section class="container mx-auto px-4 py-20">

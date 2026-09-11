@@ -1,19 +1,18 @@
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-// gera as rotas estáticas para cada arquivo .md na pasta content/projects
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
   return projects.map((project) => ({
-    params: { slug: project.slug },
+    params: { slug: project.id },
     props: { project },
   }));
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render(); // Renderiza o texto do Markdown
+const { Content } = await render(project);
 ---
 
 <BaseLayout title={`${project.data.title} | Nara Oliveira`}>
@@ -44,7 +43,7 @@ const { Content } = await project.render(); // Renderiza o texto do Markdown
         src={project.data.cover}
         alt={`Capa do projeto ${project.data.title}`}
         class="w-full h-auto object-cover"
-        transition:name={`img-${project.slug}`}
+        transition:name={`img-${project.id}`}
       />
     </div>
 
