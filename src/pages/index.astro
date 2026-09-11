@@ -1,4 +1,5 @@
 ---
+import ilustracao1 from "../assets/ilustracoes/1.png";
 import bolha1 from "../assets/ilustracoes/bolhas/1.png";
 import bolha2 from "../assets/ilustracoes/bolhas/2.png";
 import FloatingBubbles from "../components/ui/FloatingBubbles";
@@ -13,7 +14,7 @@ const pageTitle = "Nara Oliveira | Designer e Ilustradora";
     <div class="relative w-full flex items-center justify-center bg-paper overflow-hidden">
       <FloatingBubbles client:load bubbles={[bolha1.src, bolha2.src]} />
       <img
-        src="src/assets/ilustracoes/1.png"
+        src={ilustracao1.src}
         alt="Imagem de destaque"
         class="w-full max-w-7xl h-9/12 object-cover relative z-10 pointer-events-none"
       />
