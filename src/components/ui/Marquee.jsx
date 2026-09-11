@@ -27,7 +27,7 @@ const Marquee = () => {
           {items.map((item, index) => (
             <span
               key={`block-1-${index}`}
-              className="text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
+              className="text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter"
             >
               {item}
             </span>
@@ -38,7 +38,7 @@ const Marquee = () => {
           {items.map((item, index) => (
             <span
               key={`block-2-${index}`}
-              className="text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
+              className="text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter"
             >
               {item}
             </span>

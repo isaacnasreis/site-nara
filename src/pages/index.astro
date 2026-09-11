@@ -11,16 +11,20 @@ const pageTitle = "Nara Oliveira | Designer e Ilustradora";
 
 <BaseLayout title={pageTitle}>
   <main class="bg-paper min-h-screen">
-    <div class="relative w-full flex items-center justify-center bg-paper overflow-hidden">
-      <FloatingBubbles client:load bubbles={[bolha1.src, bolha2.src]} />
-      <img
-        src={ilustracao1.src}
-        alt="Imagem de destaque"
-        class="w-full max-w-7xl h-9/12 object-cover relative z-10 pointer-events-none"
-      />
-    </div>
-    
-    <Marquee client:load />
+    <section class="h-[calc(100dvh-5rem)] min-h-125 flex flex-col justify-between overflow-hidden">
+      <div class="relative w-full flex-1 min-h-0 flex items-center justify-center px-4 md:px-8 overflow-hidden">
+        <FloatingBubbles client:load bubbles={[bolha1.src, bolha2.src]} />
+        <img
+          src={ilustracao1.src}
+          alt="Imagem de destaque"
+          class="max-h-full max-w-full w-auto h-auto object-contain relative z-10 pointer-events-none select-none py-2"
+        />
+      </div>
+      
+      <div class="w-full shrink-0">
+        <Marquee client:load />
+      </div>
+    </section>
 
     <section class="container mx-auto px-4 py-20">
       <h2 class="sr-only">Projetos Selecionados</h2>
