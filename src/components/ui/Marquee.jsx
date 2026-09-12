@@ -1,16 +1,7 @@
 import { motion } from "framer-motion";
 
 const Marquee = () => {
-  const items = [
-    "ilustradora",
-    "✶",
-    "designer editorial",
-    "✶",
-    "dou cor, forma e vida a livros infantojuvenis",
-    "✶",
-    "pensando no tempo que tenho para pensar sobre o tempo que falta",
-    "✶",
-  ];
+  const items = ["ilustradora", "✶", "designer editorial", "✶"];
 
   return (
     <div className="relative w-full overflow-hidden bg-paper py-4">
@@ -27,7 +18,7 @@ const Marquee = () => {
           {items.map((item, index) => (
             <span
               key={`block-1-${index}`}
-              className="text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter"
+              className="text-4xl sm:text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
             >
               {item}
             </span>
@@ -38,7 +29,7 @@ const Marquee = () => {
           {items.map((item, index) => (
             <span
               key={`block-2-${index}`}
-              className="text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter"
+              className="text-4xl sm:text-6xl md:text-8xl font-display font-medium text-ink px-4 tracking-tighter"
             >
               {item}
             </span>
