@@ -1,6 +1,7 @@
 ---
 import ilustracao1 from "../assets/ilustracoes/1.png";
 import ilustracao3 from "../assets/ilustracoes/3.png";
+import ilustracao4 from "../assets/ilustracoes/4.png";
 import bolha1 from "../assets/ilustracoes/bolhas/1.png";
 import bolha2 from "../assets/ilustracoes/bolhas/2.png";
 import FloatingBubbles from "../components/ui/FloatingBubbles";
@@ -49,5 +50,84 @@ const pageTitle = "Nara Oliveira | Designer, Designer Editorial e Ilustradora";
         [Área da Grid de Projetos]
       </div>
     </section>
+
+    <section class="relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-2 md:px-6 py-12 md:py-20 lg:py-26">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 items-end">
+
+          <div class="space-y-8 md:space-y-10">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-accent block">
+              Vamos criar juntos
+            </span>
+
+            <div>
+              <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight text-ink">
+                tem um projeto <br class="hidden sm:block" />
+                <span class="italic text-ink/70">em mente</span>?
+              </h2>
+            </div>
+
+            <p class="text-base md:text-lg text-ink/60 max-w-lg leading-relaxed">
+              Estou sempre aberta a novas histórias — livros infantojuvenis, 
+              projetos editoriais, colaborações criativas ou apenas um bom café virtual.
+            </p>
+
+            <div class="group">
+              <a
+                href="mailto:oli.studiodsng@gmail.com"
+                class="inline-flex items-center gap-3 md:gap-4 text-lg md:text-xl font-display font-medium text-ink border-b-2 border-ink/20 pb-2 hover:border-accent hover:text-accent transition-all duration-500 ease-out"
+              >
+                <span>oli.studiodsng@gmail.com</span>
+                <svg 
+                  class="w-5 h-5 md:w-6 md:h-6 translate-x-0 group-hover:translate-x-1.5 transition-transform duration-500 ease-out" 
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                </svg>
+              </a>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
+              <a
+                href="https://www.instagram.com/naraoliveiraz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm tracking-wide text-ink/45 hover:text-accent transition-colors duration-300"
+              >
+                Instagram
+              </a>
+              <span class="text-ink/15 select-none" aria-hidden="true">·</span>
+              <a
+                href="https://www.behance.net/naraoliveiraz"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm tracking-wide text-ink/45 hover:text-accent transition-colors duration-300"
+              >
+                Behance
+              </a>
+              <span class="text-ink/15 select-none" aria-hidden="true">·</span>
+              <a
+                href="https://br.linkedin.com/in/naraoliveiraz"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm tracking-wide text-ink/45 hover:text-accent transition-colors duration-300"
+              >
+                LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-end justify-end select-none pointer-events-none">
+            <img
+              src={ilustracao4.src}
+              alt="Ilustração de um vaso com planta"
+              class="w-48 xl:w-56 h-auto object-contain opacity-80"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 </BaseLayout>
