@@ -1,44 +1,99 @@
 ---
 import ilustracao2 from "../../assets/ilustracoes/2.png";
+
+const currentPath = Astro.url.pathname;
+const isProjectsActive = currentPath.startsWith("/projects");
+const isAboutActive = currentPath.startsWith("/about");
+const isContactActive = currentPath.startsWith("/contact");
 ---
 
-
 <header
-  class="w-full h-20 px-4 md:px-8 flex justify-between items-center bg-paper sticky top-0 z-50 bg-opacity-90 backdrop-blur-sm"
+  id="site-header"
+  class="w-full h-20 px-4 md:px-8 sticky top-0 z-50 bg-paper/85 backdrop-blur-md border-transparent transition-all duration-300 flex items-center"
 >
-  <a
-    href="/"
-    class="text-2xl font-display font-bold tracking-tight hover:text-accent transition-colors"
-  >
-    OLI
-    <img
-      src={ilustracao2.src}
-      alt="Favicon"
-      class="w-6 h-6 inline-block ml-1 -mt-1"
-    />
-  </a>
+  <div class="w-full max-w-7xl mx-auto flex items-center justify-between">
+    <a
+      href="/"
+      class="group inline-flex items-center gap-1.5 text-2xl font-display font-bold tracking-tight text-ink hover:text-accent transition-colors duration-300 select-none"
+      aria-label="Página inicial - Oli Studio"
+    >
+      <span>OLI</span>
+      <img
+        src={ilustracao2.src}
+        alt="Ícone Oli Studio"
+        class="w-6 h-6 inline-block transition-transform duration-300 ease-out group-hover:rotate-12 group-hover:scale-110"
+        loading="eager"
+      />
+    </a>
 
-  <nav>
-    <ul class="flex gap-6 text-sm font-medium tracking-wide">
-      <li>
-        <a
-          href="/projects"
-          class="hover:underline decoration-accent underline-offset-4"
-          >Projetos</a
-        >
-      </li>
-      <li>
-        <a
-          href="/about"
-          class="hover:underline decoration-accent underline-offset-4">Sobre</a
-        >
-      </li>
-      <li>
-        <a
-          href="mailto:contato@nara.com"
-          class="opacity-60 hover:opacity-100 transition-opacity">Contato</a
-        >
-      </li>
-    </ul>
-  </nav>
+    <nav aria-label="Navegação principal">
+      <ul class="flex items-center gap-5 sm:gap-7 text-sm font-medium tracking-wide">
+        <li>
+          <a
+            href="/projects"
+            class:list={[
+              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
+              isProjectsActive
+                ? "text-ink font-semibold after:w-full"
+                : "text-ink/75 hover:text-ink after:w-0 hover:after:w-full",
+            ]}
+          >
+            Projetos
+          </a>
+        </li>
+        <li>
+          <a
+            href="/about"
+            class:list={[
+              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
+              isAboutActive
+                ? "text-ink font-semibold after:w-full"
+                : "text-ink/75 hover:text-ink after:w-0 hover:after:w-full",
+            ]}
+          >
+            Sobre
+          </a>
+        </li>
+        <li>
+          <a
+            href="/contact"
+            class:list={[
+              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
+              isContactActive
+                ? "text-ink font-semibold after:w-full"
+                : "text-ink/75 hover:text-ink after:w-0 hover:after:w-full",
+            ]}
+          >
+            <span>Contato</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>
+
+<script>
+  function setupHeaderScroll() {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+
+    const onScroll = () => {
+      if (window.scrollY > 16) {
+        header.classList.add("border-ink/10", "shadow-[0_4px_20px_-4px_rgba(26,26,26,0.03)]", "bg-paper/95");
+        header.classList.remove("border-transparent", "bg-paper/85");
+      } else {
+        header.classList.remove("border-ink/10", "shadow-[0_4px_20px_-4px_rgba(26,26,26,0.03)]", "bg-paper/95");
+        header.classList.add("border-transparent", "bg-paper/85");
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  setupHeaderScroll();
+  document.addEventListener("astro:after-swap", setupHeaderScroll);
+</script>

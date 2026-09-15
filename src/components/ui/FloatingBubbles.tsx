@@ -92,10 +92,10 @@ export default function FloatingBubbles({
               opacity: cfg.opacity,
             }}
             animate={{
-              x: [0, cfg.driftX, cfg.driftX * -0.8, 0],
-              y: [0, cfg.driftY * -1, cfg.driftY * 0.8, 0],
+              x: [0, cfg.driftX, cfg.driftX * -0.9, 0],
+              y: [0, cfg.driftY * -2, cfg.driftY * 0.9, 0],
               rotate: [0, 7, -4, 0],
-              scale: [1, 1.04, 0.95, 1],
+              scale: [1, 1.08, 0.93, 1],
             }}
             transition={{
               duration: cfg.duration,

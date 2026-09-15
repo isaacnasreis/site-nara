@@ -7,10 +7,16 @@ const projectsCollection = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      year: z.string(), // ex: "2024"
-      category: z.enum(["Editorial", "Identidade", "Ilustração", "Cultura"]),
-      cover: image(), // Capa do projeto
-      gallery: z.array(image()).optional(), // Imagens adicionais para a página interna
+      year: z.string(),
+      category: z.enum([
+        "Editorial",
+        "Design",
+        "Identidade",
+        "Ilustração",
+        "Cultura",
+      ]),
+      cover: image(),
+      gallery: z.array(image()).optional(),
       featured: z.boolean().default(false),
     }),
 });
