@@ -2,8 +2,9 @@
 
 @theme {
   --color-paper: #fdf4e5;
-  --color-ink: #1a1a1a;
+  --color-ink: #181818;
   --color-accent: #ff4500;
+  --color-bubbles: #8eaab0;
   --font-sans: "Inter", sans-serif;
   --font-display: "Playfair Display", serif;
 }

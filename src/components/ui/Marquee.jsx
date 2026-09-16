@@ -1,74 +1,146 @@
-import { motion } from "framer-motion";
-import ilustracao4 from "../../assets/ilustracoes/bolhas/1.png";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const SPEED_NORMAL = 1.2;
+const SPEED_SLOW = 0.3;
+const LERP_FACTOR = 0.04;
 
 const Marquee = () => {
-  const imgSrc =
-    typeof ilustracao4 === "object" && ilustracao4?.src
-      ? ilustracao4.src
-      : ilustracao4;
+  const items = ["ilustradora", "✦", "designer editorial", "✦"];
 
-  const items = [
-    { type: "text", value: "Ilustradora" },
-    { type: "image", value: imgSrc },
-    { type: "text", value: "Designer editorial" },
-    { type: "image", value: imgSrc },
-    { type: "text", value: "Ilustradora" },
-    { type: "image", value: imgSrc },
-    { type: "text", value: "Designer editorial" },
-    { type: "image", value: imgSrc },
-  ];
+  const [isInverted, setIsInverted] = useState(false);
+  const containerRef = useRef(null);
+  const trackRef = useRef(null);
+  const positionRef = useRef(0);
+  const currentSpeedRef = useRef(SPEED_NORMAL);
+  const targetSpeedRef = useRef(SPEED_NORMAL);
+  const rafRef = useRef(null);
+  const halfWidthRef = useRef(0);
+
+  const measureTrack = useCallback(() => {
+    if (!trackRef.current) return;
+    const firstBlock = trackRef.current.children[0];
+    if (firstBlock) {
+      halfWidthRef.current = firstBlock.offsetWidth;
+    }
+  }, []);
+
+  useEffect(() => {
+    measureTrack();
+    window.addEventListener("resize", measureTrack);
+
+    const animate = () => {
+      currentSpeedRef.current +=
+        (targetSpeedRef.current - currentSpeedRef.current) * LERP_FACTOR;
+
+      positionRef.current -= currentSpeedRef.current;
+
+      if (
+        halfWidthRef.current > 0 &&
+        Math.abs(positionRef.current) >= halfWidthRef.current
+      ) {
+        positionRef.current += halfWidthRef.current;
+      }
+
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translateX(${positionRef.current}px)`;
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", measureTrack);
+    };
+  }, [measureTrack]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const pastThreshold = rect.top < viewportH * 0.65 && rect.bottom > 0;
+      setIsInverted(pastThreshold);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("marquee-inversion", {
+        detail: { inverted: isInverted },
+      }),
+    );
+  }, [isInverted]);
+
+  const onMouseEnter = () => {
+    targetSpeedRef.current = SPEED_SLOW;
+  };
+  const onMouseLeave = () => {
+    targetSpeedRef.current = SPEED_NORMAL;
+  };
 
   return (
-    <div className="relative w-full overflow-hidden bg-paper py-4 select-none">
-      <motion.div
-        className="flex whitespace-nowrap w-max items-center"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: 35,
-        }}
+    <div
+      ref={containerRef}
+      className={[
+        "relative w-full overflow-hidden py-5 select-none cursor-default transition-colors duration-700 ease-out",
+        isInverted ? "bg-ink" : "bg-paper",
+      ].join(" ")}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <div
+        ref={trackRef}
+        className={[
+          "flex whitespace-nowrap w-max items-center will-change-transform",
+          "transition-colors duration-700 ease-out",
+          isInverted ? "text-paper" : "text-ink",
+        ].join(" ")}
       >
         <div className="flex shrink-0 items-center">
-          {items.map((item, index) =>
-            item.type === "text" ? (
-              <span
-                key={`block-1-${index}`}
-                className="text-6xl sm:text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter lowercase"
-              >
-                {item.value}
-              </span>
-            ) : (
-              <img
-                key={`block-1-${index}`}
-                src={item.value}
-                alt="Ilustração Nara Oliveira"
-                className="h-10 sm:h-16 md:h-20 w-auto object-contain mx-3 sm:mx-6 md:mx-8 inline-block pointer-events-none"
-              />
-            ),
-          )}
+          {items.map((item, i) => (
+            <span
+              key={`a-${i}`}
+              className={[
+                "font-display font-medium px-4 tracking-tighter lowercase",
+                item === "✦"
+                  ? isInverted
+                    ? "text-3xl sm:text-5xl md:text-6xl text-accent"
+                    : "text-3xl sm:text-5xl md:text-6xl text-bubbles"
+                  : "text-6xl sm:text-8xl md:text-10xl",
+              ].join(" ")}
+            >
+              {item}
+            </span>
+          ))}
         </div>
 
         <div className="flex shrink-0 items-center" aria-hidden="true">
-          {items.map((item, index) =>
-            item.type === "text" ? (
-              <span
-                key={`block-2-${index}`}
-                className="text-6xl sm:text-8xl md:text-10xl font-display font-medium text-ink px-4 tracking-tighter lowercase"
-              >
-                {item.value}
-              </span>
-            ) : (
-              <img
-                key={`block-2-${index}`}
-                src={item.value}
-                alt=""
-                className="h-10 sm:h-16 md:h-20 w-auto object-contain mx-3 sm:mx-6 md:mx-8 inline-block pointer-events-none"
-              />
-            ),
-          )}
+          {items.map((item, i) => (
+            <span
+              key={`b-${i}`}
+              className={[
+                "font-display font-medium px-4 tracking-tighter lowercase",
+                item === "✦"
+                  ? isInverted
+                    ? "text-3xl sm:text-5xl md:text-6xl text-accent"
+                    : "text-3xl sm:text-5xl md:text-6xl text-bubbles"
+                  : "text-6xl sm:text-8xl md:text-10xl",
+              ].join(" ")}
+            >
+              {item}
+            </span>
+          ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

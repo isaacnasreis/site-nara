@@ -7,6 +7,7 @@ export default {
         paper: "#FDF4E5",
         ink: "#1A1A1A",
         accent: "#FF4500",
+        bubbles: "#8EAAB0",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

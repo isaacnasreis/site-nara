@@ -1,6 +1,4 @@
 ---
-import ilustracao2 from "../../assets/ilustracoes/2.png";
-
 const currentPath = Astro.url.pathname;
 const isProjectsActive = currentPath.startsWith("/projects");
 const isAboutActive = currentPath.startsWith("/about");
@@ -9,21 +7,17 @@ const isContactActive = currentPath.startsWith("/contact");
 
 <header
   id="site-header"
-  class="w-full h-20 px-4 md:px-8 sticky top-0 z-50 bg-paper/85 backdrop-blur-md border-transparent transition-all duration-300 flex items-center"
+  class="w-full h-20 px-4 md:px-8 sticky top-0 z-50 bg-paper/85 backdrop-blur-md border-transparent transition-all duration-700 ease-out flex items-center"
 >
   <div class="w-full max-w-7xl mx-auto flex items-center justify-between">
     <a
       href="/"
-      class="group inline-flex items-center gap-1.5 text-2xl font-display font-bold tracking-tight text-ink hover:text-accent transition-colors duration-300 select-none"
+      data-logo
+      class="group inline-flex items-center gap-1.5 text-2xl font-display font-bold tracking-tight text-ink hover:text-accent transition-colors duration-700 select-none"
       aria-label="Página inicial - Oli Studio"
     >
       <span>OLI</span>
-      <img
-        src={ilustracao2.src}
-        alt="Ícone Oli Studio"
-        class="w-6 h-6 inline-block transition-transform duration-300 ease-out group-hover:rotate-12 group-hover:scale-110"
-        loading="eager"
-      />
+      <span data-logo-img>✦</span>
     </a>
 
     <nav aria-label="Navegação principal">
@@ -31,8 +25,9 @@ const isContactActive = currentPath.startsWith("/contact");
         <li>
           <a
             href="/projects"
+            data-nav-link
             class:list={[
-              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "relative py-1 text-sm tracking-wide transition-colors duration-700",
               "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
               isProjectsActive
                 ? "text-ink font-semibold after:w-full"
@@ -45,8 +40,9 @@ const isContactActive = currentPath.startsWith("/contact");
         <li>
           <a
             href="/about"
+            data-nav-link
             class:list={[
-              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "relative py-1 text-sm tracking-wide transition-colors duration-700",
               "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
               isAboutActive
                 ? "text-ink font-semibold after:w-full"
@@ -59,8 +55,9 @@ const isContactActive = currentPath.startsWith("/contact");
         <li>
           <a
             href="/contact"
+            data-nav-link
             class:list={[
-              "relative py-1 text-sm tracking-wide transition-colors duration-300",
+              "relative py-1 text-sm tracking-wide transition-colors duration-700",
               "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-accent after:rounded-full after:transition-all after:duration-300 after:ease-out",
               isContactActive
                 ? "text-ink font-semibold after:w-full"
@@ -76,24 +73,48 @@ const isContactActive = currentPath.startsWith("/contact");
 </header>
 
 <script>
-  function setupHeaderScroll() {
+  function setupHeader() {
     const header = document.getElementById("site-header");
     if (!header) return;
 
     const onScroll = () => {
-      if (window.scrollY > 16) {
-        header.classList.add("border-ink/10", "shadow-[0_4px_20px_-4px_rgba(26,26,26,0.03)]", "bg-paper/95");
-        header.classList.remove("border-transparent", "bg-paper/85");
+      const scrolled = window.scrollY > 16;
+      header.classList.toggle("shadow-[0_4px_20px_-4px_rgba(26,26,26,0.03)]", scrolled);
+    };
+
+    const onInversion = (e: any) => {
+      const inverted = e.detail?.inverted;
+
+      if (inverted) {
+        header.classList.add("bg-ink/90", "text-paper");
+        header.classList.remove("bg-paper/85", "text-ink");
+        header.querySelectorAll("[data-nav-link]").forEach((link) => {
+          link.classList.add("!text-paper/75", "hover:!text-paper");
+          link.classList.remove("text-ink/75", "hover:text-ink");
+        });
+        header.querySelector("[data-logo]")?.classList.add("!text-paper", "hover:!text-accent");
+        header.querySelector("[data-logo]")?.classList.remove("text-ink");
+        header.querySelector("[data-logo-img]")?.classList.add("text-accent");
+        header.querySelector("[data-logo-img]")?.classList.remove("text-bubbles");
       } else {
-        header.classList.remove("border-ink/10", "shadow-[0_4px_20px_-4px_rgba(26,26,26,0.03)]", "bg-paper/95");
-        header.classList.add("border-transparent", "bg-paper/85");
+        header.classList.remove("bg-ink/90", "text-paper");
+        header.classList.add("bg-paper/85", "text-ink");
+        header.querySelectorAll("[data-nav-link]").forEach((link) => {
+          link.classList.remove("!text-paper/75", "hover:!text-paper");
+          link.classList.add("text-ink/75", "hover:text-ink");
+        });
+        header.querySelector("[data-logo]")?.classList.remove("!text-paper", "hover:!text-accent");
+        header.querySelector("[data-logo]")?.classList.add("text-ink");
+        header.querySelector("[data-logo-img]")?.classList.remove("text-accent");
+        header.querySelector("[data-logo-img]")?.classList.add("text-bubbles");
       }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("marquee-inversion", onInversion);
     onScroll();
   }
 
-  setupHeaderScroll();
-  document.addEventListener("astro:after-swap", setupHeaderScroll);
+  setupHeader();
+  document.addEventListener("astro:after-swap", setupHeader);
 </script>
